@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% block head %}
+<link rel="stylesheet" href="/static/font/material-icon/css/material-design-iconic-font.min.css">
+<link rel="stylesheet" href="/static/css/style.css">
+<style>
+    .mu-header, nav,header{
+        background-color: black !important;
+    }
+    .container{
+        background-color: transparent;
+        width: 90%
+    }
+    .main .container{
+        background-color: white !important;
+        width: 60%;
+    }
+    .main{
+        padding: 0px;
+        margin: 0px;
+    }
+    .nav-link{
+        color: #666666 !important;
+    }
+    #signin{
+        background:#719a0a;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="main">
+    <section class="sign-in" style="padding-top:100px;">
+        <div class="container">
+        <div class="signin-content">
+            <div class="signin-image">
+                <figure><img src="/static/img/signin-image.jpeg" alt="sing in image"></figure>
+                <a href="{% url 'register' %}" class="signin-image">Create an account</a>
+            </div>
+
+            <div class="signin-form">
+                <h2 class="form-title">Sign in</h2>
+                <form  method="POST" class="register-form" id="login-form">
+                    {% csrf_token %}
+                    {% if message %}
+                     <div class="form-group">
+                        <p class="alert alert-danger">{{ message }}
+                    </div>
+                    {% endif %}
+                    <div class="form-group">
+                <label for="your_name"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                <input type=text name="email" id="your_name" placeholder="Your Email" required/>
+                </div>
+<div class="form-group">
+<label for="your_pass"><i class="zmdi zmdi-lock"></i></label>
+<input type="password" name="password" id="password" placeholder="Password" required/>
+                </div>
+<div class="form-group form-button">
+<input type="submit" name="signin" id="signin" class="form-submit" value="Log in"/>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+</div>
+
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="js/main.js"></script>
+
+{% endblock %}

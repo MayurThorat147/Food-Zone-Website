@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% block head %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flat-ui/2.3.0/css/flat-ui.min.css" 
+    integrity="sha512-6f7HT84a/AplPkpSRSKWqbseRTG4aRrhadjZezYQ0oVk/B+nm/US5KzQkyyOyh0Mn9cyDdChRdS9qaxJRHayww==" 
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="/static/font/material-icon/css/material-design-iconic-font.min.css">
+<link rel="stylesheet" href="/static/css/style.css">
+<style>
+    .mu-header, nav,header{
+        background-color: black !important;
+    }
+    .container{
+        background-color: transparent;
+        width: 90%
+    }
+    .main .container{
+        background-color: white !important;
+        width: 60%;
+    }
+    .main{
+        padding: 0px;
+        margin: 0px;
+    }
+    .nav-link{
+        color: #666666 !important;
+    }
+    #signup{
+        background:#719a0a;
+    }
+    
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="page-header mb-0">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h2>Sign Up</h2>
+            </div>
+        </div>
+    </div>
+</div>
+{% if status %}
+<script>
+    alert( '{{status}}' );
+    window.location.href="/login"
+</script>
+{% endif %}
+
+{% if error %}
+<script>
+    alert('{{error}}');
+</script>
+{% endif %}
+<div class="main">
+<section class="signup" style="padding-top 100px;">
+    <div class="container main-container p-0">
+        <div class="signup-content">
+            <div class="signup-form">
+                <h2 class="form-title">Sign up</h2>
+                <form method="POST" class="register-form" actions="">
+                    <div id="msz">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="name"><i class="flaticon-account"></i></label>
+                        <input type="text" name="name" id="name" placeholder="Your Name" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="email"><i class="flaticon-email"></i></label>
+                        <input type="email" name="email" id="email" placeholder="Your Email" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="pass"><i class="flaticon-lock"></i></label>
+                        <input type="password" name="pass" id="pass" placeholder="Password" onkeyup="checkPass()" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="re-pass"><i class="flaticon-lock"></i></label>
+                        <input type="password" name="re_pass" id="re_pass" placeholder="Repeat your Password" onkeyup="checkPass()" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="pass"><i class="flaticon-lock"></i></label>
+                        <input type="text" name="number" id="number" placeholder="Contact Number" required="required" data-validation-required-message="Please enter your contact number" />
+                    </div>
+                    <div class="form-group form-button">
+                        <input type="submit" name="signup" id="signup" class="from-submit" value="Sign Up" />
+                    </div>
+                </form>
+            </div>
+
+            <div class="signup-image">
+                <figure><img src="/static/img/signup-image.jpeg" alt="sing up image"></figure>
+                <a href="{% url 'login' %}" class="signup-image-link">I am already member</a>
+        </div>
+    </div>
+</div>
+</section>
+</div>
+{% endblock %}
+{%  block script %}
+<script>
+    function checkPass(){
+        var p = $('#pass').val();
+        var cp = $('#re_pass').val();
+        if(p==cp){
+            $('#signup').attr('disabled',false).css({'background':'#6dabe4'});
+            $('#msz').html('');
+        }else{
+            $('#signup').attr('disabled',true).css({'background':'red'});
+            $('#msz').html("<small>Password don't match!</small>");
+        }
+    }
+    $('#pass, #re_pass').keyup(function() {
+        checkPass(); // Check password match
+    });
+</script>
+{% endblock %}
